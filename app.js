@@ -18,9 +18,6 @@ const server = https.createServer(options, app);
 const dbUser = process.env.DBUSER;
 const dbPass = process.env.DBPASS;
 
-console.log(console.log("mongodb://" + dbUser + ":" + dbPass + "@localhost/lm?authSource=admin"))
-
-
 app.use(routes);
 app.set("view engine", "ejs");
 app.enable("trust proxy");

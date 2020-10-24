@@ -5,14 +5,17 @@ const express = require("express"),
     formidable = require("formidable"),
     fs = require("fs"),
     isLoggedIn = require("./isLoggedIn"),
+    pictures = require("./pictures"),
     storageFunctions = require("./storageFunctions");
 
 app.set("view engine", "ejs");
-
+let imgDb = storageFunctions.getImgDb();
 
 module.exports =
     //Render dashboard index page if user is logged in
-    app.get("/dashboard", isLoggedIn, (req, res) => { res.render("dashboard/dashboard"); });
+    app.get("/dashboard", isLoggedIn, (req, res) => { 
+        res.render("dashboard/dashboard"); 
+    });
 
     app.get("/dashboard/products", isLoggedIn, (req, res) => {
         Product.find({}, (err, images) => {
