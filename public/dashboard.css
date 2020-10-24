@@ -1,0 +1,86 @@
+#imagepreview{
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    background: #dfdedc;
+}
+
+#mastercontainer{
+    background: #343a40;
+    margin-top: 3rem;
+    width: 45%
+}
+
+footer{
+    border-top: 1px solid gray;
+    color: black;
+}
+
+.price {
+    opacity: 1;
+    justify-content: top;
+    align-items: top;
+}
+
+.price > p {
+    display: block;
+    margin-bottom: 10%;
+    font-size: 1.5rem;
+}
+
+#imgurl{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.form-check-lebel{
+    margin-top: 5px;
+    margin-right: 2rem;
+} 
+
+#inputFields {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+textarea {
+    width: 36.4rem;
+    height: 150px;
+}
+
+.input-group-text {
+    width: 23%;
+}
+
+.input-group > input {
+    width: 70%;
+}
+
+#priceContainer{
+    width: 70%;
+    background: white;
+    color: black;
+    border-width: 2px;
+    border-style: inset;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(195, 195, 195));
+    border-image: initial;
+}
+
+#dollarsign{
+    display: inline-block;
+    width: 1%;
+    padding: 0;
+    margin-left: 0%;
+    font-size: 1rem;
+}
+
+#price{
+    display: inline-block;
+    width: 95%;
+    height: 100%;
+    border: none;
+    padding: 1% 1% 1% 0;
+}

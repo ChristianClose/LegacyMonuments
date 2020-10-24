@@ -1,0 +1,37 @@
+<%- include("partials/header"); %>
+<div class="container" id="mastercontainer">
+    <div class="img-thumbnail" id="cecontainer" hidden="true">
+        <img id="imagepreview" src="">
+    </div>
+    <form action="/dashboard/products" method="POST" enctype="multipart/form-data" id="form1">
+        <div class="input-group mb-3">
+            <label class="input-group-text">Caption: </label>
+            <input type="text" class="form-control" name="caption" placeholder="Caption">
+        </div>
+
+        <div class=" input-group bg-light mb-3">
+            <label class="input-group-text">Image Type</label>
+            <div class="form-check form-check-inline bg-light">
+                <input class="form-check-input" type="radio" name="imagetype" id="imgurl" value="imgurl">
+                <label class="form-check-lebel text-dark" for="imgurl">Image Url</label>
+            </div>
+            <div class="form-check form-check-inline bg-light">
+                <input class="form-check-input" type="radio" name="imagetype" id="imgupload" value="imgupload">
+                <label class="form-check-lebel text-dark" for="imgupload">Upload Image</label>
+            </div>
+        </div>
+        <div class="custom-file mb-3" id="upload" hidden="true">
+        </div>
+
+        <div class="input-group mb-3" id="imgUrlDiv">
+            <label class="input-group-text">Image: </label>
+            <input type="text" id="productImgUrl" class="form-control" name="image" placeholder="Image url">
+        </div>
+        <input type="submit">
+    </form>
+    <!-- <form action="/dashboard/products/upload" enctype="multipart/form-data" method="POST" id="form2">
+
+        <input type="hidden" name="bob">
+    </form> -->
+</div>
+<%- include("partials/footer"); %>

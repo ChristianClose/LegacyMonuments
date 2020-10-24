@@ -1,0 +1,8 @@
+File from: [public/pictures/source/default.jpg]
+
+File to: [public/pictures/compressed/default.jpg]
+
+Compression algorithm: [mozjpeg]
+
+Description: Error: Command failed: C:\Users\Christian\Documents\Test sites\Site 1\node_modules\mozjpeg\vendor\cjpeg.exe -quality 8 -outfile public/pictures/compressed/default.jpg public/pictures/source/default.jpg
+Empty input file

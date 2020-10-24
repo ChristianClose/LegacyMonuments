@@ -1,0 +1,41 @@
+<%- include("partials/header"); %>
+<div class=container id="mastercontainer">
+    <div class="img-thumbnail" id="cecontainer">
+        <img id="captionedit" src="<%= image.image %>">
+    </div>
+    <div id="inputFields">
+        <form action="/dashboard/products/<%= image._id %>?_method=PUT" method="POST" style="display: inline;">
+            <div class="input-group mb3">
+                <label class="input-group-text">Caption: </label>
+                <input type="text" name="product[caption]" placeholder="Add Caption" value="<%= image.caption %>">
+            </div>
+
+            <div class="input-group mb3">
+                <label class="input-group-text">Image: </label>
+                <input type="text" name="product[image]" placeholder="Image Location" value="<%= image.image %>">
+            </div>
+
+            <div class="input-group mb3">
+                <label class="input-group-text">Price: </label>
+                <span id="priceContainer"><p id="dollarsign">$</p>
+                <input type="number" step="0.01" id="price" name="product[price]" placeholder="Add Price" value="<%= image.price %>"></span>
+            </div>
+
+            <div class="input-group mb3">
+                <label class="input-group-text">Description: </label>
+                <textarea name="product[description]" placeholder="Add description"><%= image.description %></textarea>
+            </div>
+
+            <input class="btn btn-light" type="submit">
+            <input type="hidden" value="/dashboard/products/<%= image._id %>?_method=DELETE" id="deleteId">
+        </form>
+        <form id="deleteform" style="display: inline;">
+            <input type="hidden" value="<%= image.image %>" id="deleteMame" name="deleteName">
+            <input type="hidden" value="<%= image.compressedImage %>" id="deleteCompressed" name="deleteCompressed">
+            <button class="btn btn-danger" id="deleteproduct">Delete</button>
+        </form>
+    </div>
+</div>
+
+
+<%- include("partials/footer"); %>

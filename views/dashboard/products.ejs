@@ -1,0 +1,24 @@
+<%- include("partials/header") %>
+<div class="row text-center">
+    <% images.forEach((item) => { %>
+        <div class="col-md-3 col-sm-6">
+            <div class="img-thumbnail">
+                <a href="/dashboard/products/<%= item._id %>/edit">
+                    <span class="price"><p>$<% if(item.price !== null) { %><%=item.price.toFixed(2) %> <% } %></p></span>
+                    <img class="images" src="<% if(item.compressedImage != ''){ %><%= item.compressedImage %><% } else { %><%= item.image %><% } %>">
+                    <p class="slidecaption"><%= item.caption %></p>
+                </a>
+            </div>
+        </div>
+
+    <% }); %>
+    <div class="col-md-3 col-sm-6">
+        <div class="img-thumbnail" style="padding-top: 17%; padding-bottom: 17%;">
+            <a href="/dashboard/products/new">
+                <p>Add Product</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer") %>

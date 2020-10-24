@@ -1,0 +1,5 @@
+node_modules
+log
+public/pictures/
+.env
+start mongodb.bat
