@@ -13,7 +13,7 @@ const methodOverride = require("method-override"),
     products = require("./local_modules/products"),
     login = require("./local_modules/login");
 
-
+//Checks if the user is using HTTPS, and if not redirect to HTTPS
 function isSecure(req, res, next){
     if(req.secure){
         return next();
@@ -21,6 +21,7 @@ function isSecure(req, res, next){
     res.redirect("https://" + req.hostname + req.url );
 }
 
+//Using isSecure middleware to check all requests are using HTTPS
 app.all("*", isSecure);
 
 app.use(require("express-session")({
@@ -48,6 +49,7 @@ app.use(captions.captionsEdit);
 app.use(captions.captionsUpdate);
 
 app.use(products);
+//TODOS
 app.get("/pricing", (req, res) => { res.redirect("/"); });
 app.get("/checkout", (req, res) => { res.render("checkout"); });
 
