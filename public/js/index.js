@@ -2,7 +2,7 @@
 /*Runs the correct functions when the user first loads the page */
 window.addEventListener("load", () => {
     //checks if user is on home page then runs the slideshow
-    window.location.pathname === "/" ? slideshow() : null;
+    //window.location.pathname === "/" ? slideshow() : null;
     setActive();
 });
 

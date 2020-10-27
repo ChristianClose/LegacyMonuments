@@ -3,3 +3,4 @@ log/
 public/pictures/
 .env
 start mongodb.bat
+Legacy Monuments.code-workspace

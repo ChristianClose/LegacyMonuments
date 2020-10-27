@@ -58,6 +58,8 @@ if (window.location.pathname === "/dashboard/products/new") {
             imgUploadInput.classList.add("custom-file-input");
             imgUploadInput.setAttribute("id", "fileupload");
             imgUploadInput.setAttribute("name", "imgupload");
+            imgUploadInput.setAttribute("accept", "image/*");
+
 
             document.getElementById("upload").appendChild(imgUploadLabel);
             imgUploadLabel.classList.add("custom-file-label");
@@ -130,7 +132,7 @@ if (window.location.pathname.includes("edit")) {
 function imagePreview() {
     if (imageType.value === "imgurl") {
         if (imgUrl !== null) {
-            imgUrl.addEventListener("focusout", () => {
+            imgUrl.addEventListener("input", () => {
                 let imagesrc = document.getElementById("productImgUrl").value;
 
                 if (imagesrc !== "") {
@@ -164,7 +166,7 @@ function imageName() {
 function showUserImage(src, target) {
     var fr = new FileReader();
     fr.onload = function () { target.src = this.result; };
-    src.addEventListener("change", function () {
+    src.addEventListener("input", function () {
         fr.readAsDataURL(src.files[0]);
     });
 }

@@ -5,7 +5,10 @@ var check = function (item) { return item.src !== ""; };
 var responseObject;
 
 if (window.location.pathname === "/products") {
-    getResponse("/pictures/", setProductImages);
+    (async () => {
+       let response =  await getResponse("/pictures/");
+        setProductImages(response)
+    })();
 }
 
 function setProductImages(response) {

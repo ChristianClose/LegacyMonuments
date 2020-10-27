@@ -4,9 +4,13 @@ if (document.getElementById("imageId") !== null) {
     var add = document.getElementById("add");
     add.addEventListener("click", addItem)
 }
-function cart() {
 
+if(document.getElementById("submitCart")){
+    document.getElementById("submitCart").addEventListener("click", () => {
+        sessionStorage.clear()
+    });
 }
+
 function addItem() {
     var sessObject = {};
     var imageId = document.getElementById("imageId").innerText;
@@ -22,9 +26,9 @@ function addItem() {
     sessObject.id = imageId;
     sessObject.quantity = 1;
     sessObject.name = imageName.replace("~", "");
-    sessObject.price = imagePrice;
+    sessObject.price = parseFloat(imagePrice.replace("$", ""));
 
-    itemArray.push({ item: sessObject });
+    itemArray.push(sessObject);
     sessionStorage.setItem("cart", JSON.stringify(itemArray));
     if(document.getElementById("cart") === null){
         createCart();
@@ -71,7 +75,6 @@ function createCart() {
         var thName = document.createElement("th");
         var button = document.createElement("button");
         var card = document.createElement("div");
-        var total = document.createElement("tr");
         var checkoutBtn = document.createElement("button");
 
         //table.setAttribute("id", "cart")
@@ -130,11 +133,11 @@ function showCart() {
     var rowCount = document.getElementById("cartItems").rows.length;
     cart.forEach((item) => {
         var row = document.getElementById("cartItems").insertRow(rowCount);
-        var price = item.item.price.replace("$", "");
-        row.insertCell(0).innerText = item.item.name;
+        var price = item.price;
+        row.insertCell(0).innerText = item.name;
         row.insertCell(1).innerText = "$" + parseFloat(price).toFixed(2);
-        console.log(item.item.price)
-        totalPrice += parseFloat(item.item.price.replace("$", ""));
+        console.log(item.price)
+        totalPrice += parseFloat(item.price);
         rowCount++;
     });
 

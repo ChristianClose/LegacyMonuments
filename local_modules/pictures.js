@@ -14,6 +14,39 @@ module.exports =
          //send the images object to the client to be processed and used for the slideshow
         res.send(images);
     });
+
+function findImage(req, res, next) {
+    var thisimage = { compressedImage: "asc" };
+    //ImgDb is an empty array because we want to use it to store just the images directories
+    var imgDb = [];
+
+    if (req.query.compressed === "false") {
+        thisimage = { image: "asc" };
+    }
+
+    /*Getting all the images and their properties from the database, then sorting by the image dir in ascending order
+    then using .exec to execute the query*/
+    Product.find({}).sort(thisimage).exec((err, images) => {
+        if (err) {
+            console.log(err);
+        } else {
+            //Looping through the images object to get each subobjects image property, then storing it in the imgDB array
+            images.forEach((item) => {
+                if (req.query.compressed === "" || req.query.compressed === undefined || req.query.compressed === "true") {
+                    imgDb.push(item.compressedImage)
+                } else {
+                    imgDb.push(item.image);
+                }
+            });
+            req.body.imageObj = { images : images.sort(), imgDb: imgDb };
+        }
+        return next();
+    });
+
+}
+
+    /* Unused for now until I can figure out how to properly implement this.
+    // May cause issues if web Admin manually deletes images from the directory instead of deleting through the dashboard */
 //  function deleteUnmatchedImage(req, res, next) {
 //     //Filtering the imgDB array to get only the items that do not match both the local dir and the database
 //     let imgDb = imgStorage.getImgDb();
@@ -56,37 +89,3 @@ module.exports =
 //     //     }
 //     // }
 // }
-
-function findImage(req, res, next) {
-    var thisimage = { compressedImage: "asc" };
-    //ImgDb is an empty array because we want to use it to store just the images directories
-    var imgDb = [];
-    var imgDir = [];
-    if (req.query.compressed === "false") {
-        thisimage = { image: "asc" };
-        imgDir = imgStorage.getImageDir().images;
-    } else {
-        imgDir = imgStorage.getImageDir().compressed;
-    }
-
-    /*Getting all the images and their properties from the database, then sorting by the image dir in ascending order
-    then using .exec to execute the query*/
-    Product.find({}).sort(thisimage).exec((err, images) => {
-        if (err) {
-            console.log(err);
-        } else {
-            //console.log(images)
-            //Looping through the images object to get each subobjects image property, then storing it in the imgDB array
-            images.forEach((item) => {
-                if (req.query.compressed === "" || req.query.compressed === undefined || req.query.compressed === "true") {
-                    imgDb.push(item.compressedImage)
-                } else {
-                    imgDb.push(item.image);
-                }
-            });
-            req.body.imageObj = { images : images.sort(), imgDb: imgDb };
-        }
-        return next();
-    });
-
-}

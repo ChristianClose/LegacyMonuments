@@ -11,6 +11,7 @@ const methodOverride = require("method-override"),
     captions = require("./local_modules/captions"),
     dashboard = require("./local_modules/dashboard"),
     products = require("./local_modules/products"),
+    Customer = require("./models/customer"),
     login = require("./local_modules/login");
 
 //Checks if the user is using HTTPS, and if not redirect to HTTPS
@@ -52,6 +53,30 @@ app.use(products);
 //TODOS
 app.get("/pricing", (req, res) => { res.redirect("/"); });
 app.get("/checkout", (req, res) => { res.render("checkout"); });
+app.post("/checkout", (req, res) => {
+    var query = {
+        email: req.body.customer.email
+    }
+    let order = JSON.parse(req.body.customer.order);
+    console.log(order)
+    var update = {
+        $setOnInsert: {
+            //image in the db will look something like "/pictures/artwork/loki/jpg"
+            name: req.body.customer.name,
+            phone: req.body.customer.phone,
+            address: req.body.customer.address,
+            order: order
+        },
+    };
+    Customer.findOneAndUpdate(query, update, {upsert: true} , (err) => {
+        if(err) {
+            console.log(err);
+        } else {
+
+            res.redirect("/");
+        }
+    })
+})
 
 app.use(dashboard);
 

@@ -48,7 +48,6 @@ function storeImage(picDir) {
             var query = {compressedImage: dir};
         }
 
-
         Product.findOneAndUpdate(query, update, upsert)
             .catch(error => console.error(error));
         //.then(data => console.log(data));
@@ -67,12 +66,6 @@ function storeImage(picDir) {
     //Used to store the images files (such as abc.png) in an array
     let imgs = [];
     let picDir = { images: [], compressed: [] };
-
-    // if (compressed === false) {
-    //     pictureDir = "/pictures/source/";
-    //     pictures = path.join(__dirname, "../public/pictures/source");
-    //     imgRoot = fs.readdirSync(pictures);
-    // }
 
     //Looping through each subdirectory of the pictures directory
     imgRoot.forEach((dir) => {
@@ -128,7 +121,6 @@ function getImgDb(){
         if (err) {
             console.log(err);
         } else {
-            //console.log(images)
             //Looping through the images object to get each subobjects image property, then storing it in the imgDB array
             images.forEach((item) => {
                     imgDb.compressedImages.push(item.compressedImage)

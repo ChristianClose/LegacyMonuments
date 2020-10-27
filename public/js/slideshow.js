@@ -6,7 +6,11 @@ var captions = [];
 var links = [];
 
 if (navigator.onLine && window.location.pathname === "/") {
-    images = getResponse("/pictures/?compressed=false", setImages);
+    (async () => { images = await getResponse("/pictures/?compressed=false"); 
+                    console.log(images)
+                    setImages(images)
+                    slideshow()})();
+
 }
 /*************************************/
 
@@ -25,9 +29,9 @@ function setImages(response = undefined) {
     let imgs = [];
     let caps = [];
     let link = [];
-    console.log(response);
     if (response !== undefined) {
-        response.forEach((item) => {
+       response.forEach((item) => {
+            console.log(item);
             imgs.push(item.image);
             caps.push(item.caption);
             link.push(item._id);
