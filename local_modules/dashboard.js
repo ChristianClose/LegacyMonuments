@@ -5,6 +5,7 @@ const express = require("express"),
     formidable = require("formidable"),
     fs = require("fs"),
     isLoggedIn = require("./isLoggedIn"),
+    Order = require("../models/order"),
     pictures = require("./pictures"),
     storageFunctions = require("./storageFunctions");
 
@@ -13,8 +14,10 @@ let imgDb = storageFunctions.getImgDb();
 
 module.exports =
     //Render dashboard index page if user is logged in
-    app.get("/dashboard", isLoggedIn, (req, res) => { 
-        res.render("dashboard/dashboard"); 
+    app.get("/dashboard", isLoggedIn, (req, res) => {
+        Order.find({}).populate("customer")
+        .then(orders => res.render("dashboard/dashboard", {orders: orders}))
+        
     });
 
     app.get("/dashboard/products", isLoggedIn, (req, res) => {

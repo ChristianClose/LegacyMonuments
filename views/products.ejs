@@ -4,7 +4,7 @@
         <div class="col-md-4 col-sm-6">
             <div class="img-thumbnail">
                 <a href="/products/<%= item._id %>" >
-                    <span class="price">$<% if(item.price !== null) { %><%=item.price.toFixed(2) %> <% } %></span>
+                    <span class="price"><% if(item.price) { %>$<%=item.price.toFixed(2) %> <% } %></span>
                     <img class="images" src="<%= item.compressedImage %>">
                     <p class="slidecaption"><%= item.caption %></p>
                      <!-- <p class="price">$<% if(item.price !== null) { %><%=item.price.toFixed(2) %> <% } %></p>  -->

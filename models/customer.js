@@ -10,14 +10,8 @@ var customerSchema = new mongoose.Schema({
         street: {type: String, default: ""},
         city: {type: String, default: ""},
         state: {type: String, default: ""},
-    },
-    order: {
-        item: {type: String, default: ""},
-        id: {type: String, default: ""},
-        name: {type: String, default: ""},
-        price: {type: String, default: ""},
-
     }
-}),
+})
+
 Customer = mongoose.model("Customer", customerSchema);
 module.exports = Customer;

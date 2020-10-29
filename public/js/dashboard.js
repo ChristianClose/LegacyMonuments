@@ -170,3 +170,26 @@ function showUserImage(src, target) {
         fr.readAsDataURL(src.files[0]);
     });
 }
+
+if (document.getElementById("inProgress")) {
+    let checkboxes = document.getElementsByName("isComplete");
+    let inProgressCheckboxes = document.querySelectorAll("#inProgress [id^='isComplete'");
+    let completeCheckboxes = document.querySelectorAll("#completedOrders [id^='isInComplete'");
+    Array.from(checkboxes).forEach((checkbox, i) => {
+        checkbox.addEventListener("click", () => {
+            if (document.getElementById("inProgressTab").getAttribute("aria-selected") === "true") {
+                console.log(checkbox.checked)
+                if (checkbox.checked === true) {
+                    inProgressCheckboxes.forEach(checkbox => checkbox.submit());
+                }
+            } else {
+                if (checkbox.checked === true) {
+                    console.log("isInComplete" + parseInt(i+1));
+                    completeCheckboxes.forEach(checkbox => checkbox.submit());
+                }
+            }
+
+        })
+
+    })
+}

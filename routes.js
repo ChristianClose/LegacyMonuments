@@ -12,14 +12,15 @@ const methodOverride = require("method-override"),
     dashboard = require("./local_modules/dashboard"),
     products = require("./local_modules/products"),
     Customer = require("./models/customer"),
+    Order = require("./models/order"),
     login = require("./local_modules/login");
 
 //Checks if the user is using HTTPS, and if not redirect to HTTPS
-function isSecure(req, res, next){
-    if(req.secure){
+function isSecure(req, res, next) {
+    if (req.secure) {
         return next();
     };
-    res.redirect("https://" + req.hostname + req.url );
+    res.redirect("https://" + req.hostname + req.url);
 }
 
 //Using isSecure middleware to check all requests are using HTTPS
@@ -30,7 +31,7 @@ app.use(require("express-session")({
     name: "sessionId",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1800000, secure: true, sameSite: true}
+    cookie: { maxAge: 1800000, secure: true, sameSite: true }
 }));
 
 app.use(passport.initialize());
@@ -54,29 +55,50 @@ app.use(products);
 app.get("/pricing", (req, res) => { res.redirect("/"); });
 app.get("/checkout", (req, res) => { res.render("checkout"); });
 app.post("/checkout", (req, res) => {
+
+    let date = parseInt(new Date().getTime().toString().slice(0, 5));
+    let orderNum = Math.floor((Math.random() * date) + 10000);
     var query = {
         email: req.body.customer.email
     }
     let order = JSON.parse(req.body.customer.order);
-    console.log(order)
-    var update = {
+    var updateCustomer = {
         $setOnInsert: {
             //image in the db will look something like "/pictures/artwork/loki/jpg"
             name: req.body.customer.name,
             phone: req.body.customer.phone,
             address: req.body.customer.address,
-            order: order
         },
     };
-    Customer.findOneAndUpdate(query, update, {upsert: true} , (err) => {
-        if(err) {
-            console.log(err);
-        } else {
-
-            res.redirect("/");
+    order.orderNum = orderNum;
+    var updateOrder = {
+        $setOnInsert: {
+            orderNum: orderNum.toString().trim(),
+            isComplete: false,
+            items: []
         }
-    })
+    }
+    order.forEach((item, i) => {
+        updateOrder.$setOnInsert.items.push(item);
+    });
+    Customer.findOneAndUpdate(query, updateCustomer, { upsert: true, new: true, select: "_id" })
+        .then((customer) => {
+            updateOrder.$setOnInsert.customer = customer._id;
+            Order.findOneAndUpdate({ orderNum: order.orderNum }, updateOrder, { upsert: true })
+                .then(res.redirect("/"))
+        })
+        .catch(error => console.log(error));
 })
+
+app.post("/dashboard/markcomplete", (req, res) => {
+    console.log(req.body)
+    if (req.body.isComplete) {
+        Order.findOneAndUpdate({ orderNum: req.body.orderNum }, { isComplete: req.body.isComplete })
+            .then(res.redirect("/dashboard"))
+            .catch(error => console.log(error))
+    }
+})
+
 
 app.use(dashboard);
 
