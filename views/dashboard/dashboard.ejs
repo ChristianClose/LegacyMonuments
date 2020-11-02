@@ -5,108 +5,105 @@
     <div class="container row justify-content-start ml-3 w-50">
         <ul class="nav nav-tabs" id="tableTabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active border border-secondary text-dark font-weight-bold" id="inProgressTab" href="#inProgress" data-toggle="tab" role="tab"
-                    aria-contols="inProgress" aria-selected="true">In Progress</a>
+                <a class="nav-link active border border-secondary text-dark font-weight-bold" id="inProgressTab"
+                    href="#inProgress" data-toggle="tab" role="tab" aria-contols="inProgress" aria-selected="true">In
+                    Progress</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link border border-secondary text-dark font-weight-bold" id="completedOrdersTab" data-toggle="tab" role="tab" aria-contols="completedOrders"
-                    href="#completedOrders">Completed</a>
+                <a class="nav-link border border-secondary text-dark font-weight-bold" id="completedOrdersTab"
+                    data-toggle="tab" role="tab" aria-contols="completedOrders" href="#completedOrders">Completed</a>
             </li>
         </ul>
     </div>
 
     <div class="container tab-content">
-        <table class="col justify-content-center table table-striped table-bordered table-hover tab-pane active"
-            id="inProgress" role="tabpanel" aria-labelledby="inProgress">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Order Number</th>
-                    <th scope="col">Items</th>
-                    <th scope="col">Completed</th>
-                </tr>
-            </thead>
-            <tbody class="tbody-dark">
-                <% let i = 0; orders.forEach((order) => { %>
-                <% if(order.isComplete === false) {%>
-                <tr>
-                    <% i = parseInt(i)+1 %>
-                    <th scope="row"><%= i %></th>
-                    <td><%=order.customer.name%></td>
-                    <td><%=order.customer.phone%></td>
-                    <td><%=order.customer.email%></td>
-                    <td><%=order.orderNum%></td>
-                    <td>
-                        <ul class="col justify-content-center">
-                            <% for(j in order.items.name) {%>
-                            <li class="list-unstyled border-bottom border-secondary" style="line-height: 1.8rem;">
-                                <%= order.items.name[j] %></li>
-                            <% } %>
-                        </ul>
-                    </td>
-                    <td class="col justify-content-center align-middle" style="width: 12%;">
-                        <form action="dashboard/markcomplete" method="post" id="isComplete<%= parseInt(i) %>">
+        <section class="tab-pane active" id="inProgress" role="tabpanel" aria-labelledby="inProgress">
+            <table class="col justify-content-center table table-striped table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Order Number</th>
+                        <th scope="col">Items</th>
+                        <th scope="col">Completed</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-dark">
+                    <% let i = 0; orders.forEach((order) => { %>
+                    <% if(order.isComplete === false) {%>
+                    <tr>
+                        <% i = parseInt(i)+1 %>
+                        <th scope="row"><%= i %></th>
+                        <td><%=order.customer.name%></td>
+                        <td><%=order.customer.phone%></td>
+                        <td><%=order.customer.email%></td>
+                        <td class="orderNum"><%=order.orderNum%></td>
+                        <td>
+                            <ul class="col justify-content-center">
+                                <% for(j in order.items.name) {%>
+                                <li class="row justify-content-center list-unstyled border-bottom border-secondary" style="line-height: 1.8rem;">
+                                    <%= order.items.name[j] %></li>
+                                <% } %>
+                            </ul>
+                        </td>
+                        <td class="col justify-content-center align-middle" style="width: 12%;">
                             <div class="col justify-content-center custom-control custom-checkbox">
-                                <input class="" type="checkbox" name="isComplete" value="true"
-                                    style="height: 2rem; width: 2rem;">
-                                <input hidden=true type="text" name="orderNum" value="<%=order.orderNum%>">
+                                <input class="" type="checkbox" name="isComplete" value="true" style="height: 2rem; width: 2rem;" order="<%=order.orderNum%>">
                             </div>
-                        </form>
-                    </td>
-                </tr>
-                <% } else { i = 0} %>
-                <% }) %>
+                        </td>
+                    </tr>
+                    <% } %>
+                    <% }) %>
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </section>
 
-        <table class="col justify-content-center table table-striped table-bordered table-hover tab-pane"
-            id="completedOrders" role="tabpanel" aria-labelledby="completedOrders">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Order Number</th>
-                    <th scope="col">Items</th>
-                    <th scope="col">Incomplete</th>
-                </tr>
-            </thead>
-            <tbody class="tbody-dark">
-                <% i = 0; orders.forEach((order) => { %>
-                <% if(order.isComplete === true) {%>
-                <tr>
-                    <% i = parseInt(i)+1 %>
-                    <th scope="row"><%= i %></th>
-                    <td><%=order.customer.name%></td>
-                    <td><%=order.customer.phone%></td>
-                    <td><%=order.customer.email%></td>
-                    <td><%=order.orderNum%></td>
-                    <td>
-                        <ul class="col justify-content-center">
-                            <% for(j in order.items.name) {%>
-                            <li class="list-unstyled border-bottom border-secondary" style="line-height: 1.8rem;">
-                                <%= order.items.name[j] %></li>
-                            <% } %>
-                        </ul>
-                    </td>
-                    <td class="col justify-content-center align-middle" style="width: 12%;">
-                    <form action="dashboard/markcomplete" method="post" id="isInComplete<%= parseInt(i) %>">
-                        <div class="col justify-content-center custom-control custom-checkbox">
-                            <input class="" type="checkbox" name="isComplete" value="false" style="height: 2rem; width: 2rem;">
-                            <input hidden=true  type="text" name="orderNum" value="<%=order.orderNum%>">
-                        </div>
-                    </form>
-                </td>
-                </tr>
-                <% } else { i = 0; }%>
-                <% }) %>
-            </tbody>
-        </table>
+        <section id="completedOrders" role="tabpanel" class="tab-pane"aria-labelledby="completedOrders">
+            <table class="col justify-content-center table table-striped table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Order Number</th>
+                        <th scope="col">Items</th>
+                        <th scope="col">Incomplete</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-dark">
+                    <% i = 0; orders.forEach((order) => { %>
+                    <% if(order.isComplete === true) {%>
+                    <tr>
+                        <% i = parseInt(i)+1 %>
+                        <th scope="row"><%= i %></th>
+                        <td><%=order.customer.name%></td>
+                        <td><%=order.customer.phone%></td>
+                        <td><%=order.customer.email%></td>
+                        <td><%=order.orderNum%></td>
+                        <td>
+                            <ul class="col justify-content-center">
+                                <% for(j in order.items.name) {%>
+                                <li class="row justify-content-center list-unstyled border-bottom border-secondary" style="line-height: 1.8rem;">
+                                    <%= order.items.name[j] %></li>
+                                <% } %>
+                            </ul>
+                        </td>
+                        <td class="col justify-content-center align-middle" style="width: 12%;">
+                            <div class="col justify-content-center custom-control custom-checkbox">
+                                <input class="" type="checkbox" name="isComplete" value="false"
+                                    style="height: 2rem; width: 2rem;" order="<%=order.orderNum%>">
+                            </div>
+                        </td>
+                    </tr>
+                    <% } %>
+                    <% }) %>
+                </tbody>
+            </table>
+        </section>
     </div>
 </div>
 

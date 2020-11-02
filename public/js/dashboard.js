@@ -172,20 +172,24 @@ function showUserImage(src, target) {
 }
 
 if (document.getElementById("inProgress")) {
+    isOrderCompleted();
+    document.addEventListener("change", () => {
+        isOrderCompleted();
+    })
+}
+
+function isOrderCompleted() {
     let checkboxes = document.getElementsByName("isComplete");
-    let inProgressCheckboxes = document.querySelectorAll("#inProgress [id^='isComplete'");
-    let completeCheckboxes = document.querySelectorAll("#completedOrders [id^='isInComplete'");
-    Array.from(checkboxes).forEach((checkbox, i) => {
-        checkbox.addEventListener("click", () => {
+    Array.from(checkboxes).forEach((checkbox) => {
+        checkbox.addEventListener("click", (e) => {
             if (document.getElementById("inProgressTab").getAttribute("aria-selected") === "true") {
-                console.log(checkbox.checked)
-                if (checkbox.checked === true) {
-                    inProgressCheckboxes.forEach(checkbox => checkbox.submit());
+                if (checkbox.checked === true ) {
+                    console.log(e.target)
+                    sendOrderObject(true, e.target.getAttribute("order"));
                 }
             } else {
                 if (checkbox.checked === true) {
-                    console.log("isInComplete" + parseInt(i+1));
-                    completeCheckboxes.forEach(checkbox => checkbox.submit());
+                    sendOrderObject(false, e.target.getAttribute("order"));
                 }
             }
 
@@ -193,3 +197,17 @@ if (document.getElementById("inProgress")) {
 
     })
 }
+
+function sendOrderObject(isComplete, orderNum) {
+    console.log(JSON.stringify({ isComplete: isComplete, orderNum: orderNum }))
+    fetch("/dashboard/markcomplete", {
+        method: "POST",
+        headers: {
+            'Content-type' : 'application/json'
+        },
+        body: JSON.stringify({ isComplete: isComplete, orderNum: orderNum })
+    })
+        .then(data => console.log(data))
+        .then(location.reload())
+}
+

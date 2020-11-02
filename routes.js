@@ -39,7 +39,7 @@ app.use(passport.session());
 app.use(flash());
 
 app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json(), express.urlencoded({ extended: true }));
 app.use("/pictures", express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 
@@ -92,7 +92,7 @@ app.post("/checkout", (req, res) => {
 
 app.post("/dashboard/markcomplete", (req, res) => {
     console.log(req.body)
-    if (req.body.isComplete) {
+    if (req.body) {
         Order.findOneAndUpdate({ orderNum: req.body.orderNum }, { isComplete: req.body.isComplete })
             .then(res.redirect("/dashboard"))
             .catch(error => console.log(error))
