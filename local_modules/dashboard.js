@@ -119,3 +119,12 @@ app.put("/dashboard/products/:id", isLoggedIn, (req, res) => {
         }
     });
 });
+
+app.post("/dashboard/markcomplete", isLoggedIn, (req, res) => {
+    console.log(req.body)
+    if (req.body) {
+        Order.findOneAndUpdate({ orderNum: req.body.orderNum }, { isComplete: req.body.isComplete })
+            .then(res.redirect("/dashboard"))
+            .catch(error => console.log(error))
+    }
+})

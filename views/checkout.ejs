@@ -17,29 +17,29 @@
             <form action="/checkout" method="POST" style="display: inline;">
                 <div class="input-group mb3">
                     <label class="input-group-text">Name: </label>
-                    <input type="text" name="customer[name]" placeholder="Enter your name">
+                    <input type="text" name="customer[name]" placeholder="Enter your name" required>
                 </div>
 
                 <div class="input-group mb3">
                     <label class="input-group-text">Email: </label>
-                    <input type="email" name="customer[email]" placeholder="Enter your email">
+                    <input type="email" name="customer[email]" placeholder="Enter your email" required>
                 </div>
 
                 <div class="input-group mb3">
                     <label class="input-group-text">Phone: </label>
-                    <input type="tel" name="customer[phone]" placeholder="Enter your phone number">
+                    <input type="tel" name="customer[phone]" placeholder="Enter your phone number" required>
                 </div>
                 <br>
                 <h3>Address</h3>
                 <div class="input-group mb3">
                     <label class="input-group-text">Street: </label>
-                    <input type="text" name="customer[address][street]" placeholder="Enter your street addresss">
+                    <input type="text" name="customer[address][street]" placeholder="Enter your street addresss" required>
                     <label class="input-group-text">City: </label>
                     <input type="text" name="customer[address][city]" placeholder="Enter the city you reside in"
-                        id="city">
+                        id="city" required>
                     <label class="input-group-text">State: </label>
                     <input type="text" name="customer[address][state]"
-                        placeholder="Enter your 2 digit state code. Ex. AR" maxlength="2" id="state">
+                        placeholder="Enter your 2 digit state code. Ex. AR" maxlength="2" id="state" required>
                 </div>
                 <br>
 

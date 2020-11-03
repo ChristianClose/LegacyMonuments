@@ -1,38 +1,48 @@
 "use strict";
-/*Getting the required modules to run the site*/
-require("dotenv").config();
-const express = require("express");
-const app = express();
-const mongoose = require("mongoose");
-const routes = require("./routes");
-const https = require("https");
-const fs = require("fs");
 
-const options = {
-    key: fs.readFileSync("key.pem", "utf8"),
-    ca: fs.readFileSync("client.csr"),
-    cert: fs.readFileSync("cert.pem", "utf8")
-};
+const cluster = require("cluster");
+const cpuCount = require("os").cpus().length;
+if (cluster.isMaster) {
+    console.log(cpuCount)
+    for (let i = 0; i < cpuCount; i++) {
+        cluster.fork();
+    }
 
-const server = https.createServer(options, app);
-const dbUser = process.env.DBUSER;
-const dbPass = process.env.DBPASS;
+    cluster.on("exit", (worker) => {
+        cluster.fork();
+    })
+} else {
 
-app.use(routes);
-app.set("view engine", "ejs");
-app.enable("trust proxy");
 
-mongoose.connect("mongodb://" + dbUser + ":" + dbPass + "@localhost/lm?authSource=admin", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-})
-    .then(() => console.log("Connected to DB!"))
-    .catch(error => console.log(error.message)
-);
+    require("dotenv").config();
+    const express = require("express");
+    const app = express();
+    const mongoose = require("mongoose");
+    const routes = require("./routes");
+    const https = require("https");
+    const fs = require("fs");
+    const flash = require("connect-flash");
+    const session = require("express-session");
+    const MongoStore = require("connect-mongo")(session);
 
-server.listen(443, () => {
-    console.log("Listening on port 443");
-});
+    const options = {
+        key: fs.readFileSync("key.pem", "utf8"),
+        ca: fs.readFileSync("client.csr"),
+        cert: fs.readFileSync("cert.pem", "utf8")
+    };
 
-app.listen(80);
+    const server = https.createServer(options, app);
+
+    app.use(routes);
+    app.set("view engine", "ejs");
+    app.enable("trust proxy");
+
+    server.listen(443, () => {
+        if(cluster.worker.id === cpuCount){
+            console.log("Listening on port 443");
+        }
+        
+    });
+
+    app.listen(80);
+}

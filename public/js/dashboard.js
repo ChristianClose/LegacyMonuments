@@ -171,7 +171,7 @@ function showUserImage(src, target) {
     });
 }
 
-if (document.getElementById("inProgress")) {
+if (location.pathname === "/dashboard") {
     isOrderCompleted();
     document.addEventListener("change", () => {
         isOrderCompleted();
@@ -183,7 +183,7 @@ function isOrderCompleted() {
     Array.from(checkboxes).forEach((checkbox) => {
         checkbox.addEventListener("click", (e) => {
             if (document.getElementById("inProgressTab").getAttribute("aria-selected") === "true") {
-                if (checkbox.checked === true ) {
+                if (checkbox.checked === true) {
                     console.log(e.target)
                     sendOrderObject(true, e.target.getAttribute("order"));
                 }
@@ -203,11 +203,28 @@ function sendOrderObject(isComplete, orderNum) {
     fetch("/dashboard/markcomplete", {
         method: "POST",
         headers: {
-            'Content-type' : 'application/json'
+            'Content-type': 'application/json'
         },
         body: JSON.stringify({ isComplete: isComplete, orderNum: orderNum })
     })
         .then(data => console.log(data))
-        .then(location.reload())
+        .then(() => {
+            fetchOrderReview();
+        })
+
 }
 
+function fetchOrderReview() {
+    fetch("/dashboard")
+        .then((data) => data.text())
+        .then((html) => {
+            let parser = new DOMParser();
+            let doc = parser.parseFromString(html, 'text/html');
+            let comOrders = doc.getElementById("completedOrders");
+            let inProgress = doc.getElementById("inProgress");
+            
+            document.getElementById("completedOrders").innerHTML = comOrders.innerHTML;
+            document.getElementById("inProgress").innerHTML = inProgress.innerHTML;
+            isOrderCompleted();
+        })
+}
