@@ -1,0 +1,29 @@
+<%- include("partials/header"); %>
+<div class=container id="mainProductDiv">
+    <div class="img-thumbnail" id="productContainer">
+        <img id="image" src="<%= image.image %>">
+    </div>
+    <h2 id="productCaption"><%= image.caption %> ~ </h2>
+    <p id="productPrice">$<%= image.price %></p>
+    <button id="add">Add to Cart</button>
+</div>
+<div id="productDescription">
+    <p><%= image.description %></p>
+</div>
+
+<p hidden id="imageId"> <%= image._id %></p>
+
+<!-- <div id="cart" hidden>
+    <table>
+        <thead>
+            <tr>
+                <th>Price</th>
+                <th>Item</th>
+            </tr>
+        </thead>
+        <tbody id="cartItems">
+        </tbody>
+    </table>
+</div> -->
+
+<%- include("partials/footer"); %>

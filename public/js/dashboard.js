@@ -145,7 +145,7 @@ function imagePreview() {
             });
 
             if (document.getElementById("productImgUrl").value === "") {
-                document.getElementById("mastercontainer").style.paddingTop = "15rem";
+                document.getElementById("mastercontainer").style.paddingTop = "2rem";
             }
         }
     }

@@ -1,0 +1,54 @@
+<%- include("partials/header"); %>
+<br>
+<div class="container">
+    <div class="row">
+        <aside class="col-md-4 order-md-2 mb-4 bg-secondary rounded">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <p class="text muted text-center">Your cart</p>
+                <span class="badge badge-dark badge-pill" id="totalItems"></span>
+            </h4>
+            <ul class="list-group mb-3" id="checkoutItems">
+
+            </ul>
+
+        </aside>
+        <div id="inputFields">
+            <% console.log(error) %>
+            <h3>Contact Information</h3>
+            <form action="/checkout" method="POST" style="display: inline;" id="checkoutForm">
+                <div class="input-group mb3">
+                    <label class="input-group-text">Name: </label>
+                    <input type="text" name="customer[name]" placeholder="Enter your name" required>
+                </div>
+
+                <div class="input-group mb3">
+                    <label class="input-group-text">Email: </label>
+                    <input type="email" name="customer[email]" placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group mb3">
+                    <label class="input-group-text">Phone: </label>
+                    <input type="tel" name="customer[phone]" placeholder="Enter your phone number" required>
+                </div>
+                <br>
+                <h3>Address</h3>
+                <div class="input-group mb3">
+                    <label class="input-group-text">Street: </label>
+                    <input type="text" name="customer[address][street]" placeholder="Enter your street addresss" required>
+                    <label class="input-group-text">City: </label>
+                    <input type="text" name="customer[address][city]" placeholder="Enter the city you reside in"
+                        id="city" required>
+                    <label class="input-group-text">State: </label>
+                    <input type="text" name="customer[address][state]"
+                        placeholder="Enter your 2 digit state code. Ex. AR" maxlength="2" id="state" required>
+                </div>
+                <br>
+                <button class="btn btn-light" type="submit" id="submitCart">Submit</button>
+            </form>
+            <% if(error) { %>
+                <p><%= error %></p>
+            <% } %>
+           
+        </div>
+    </div>
+    <%- include("partials/footer"); %>

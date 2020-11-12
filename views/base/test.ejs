@@ -1,0 +1,17 @@
+<%- include("partials/header"); %>
+<h1>Edit Captions</h1>
+<div class="row text-center">
+    <% images.forEach((item) => { %>
+        <div class="col-md-3 col-sm-6">
+            <div class="img-thumbnail">
+                <a href="/dashboard/captions/<%= item._id %>/edit">
+                    <img class="images" src="/<%= item.image %>">
+                    <p class="slidecaption"><%= item.caption %></p>
+                </a>
+            </div>
+        </div>
+
+    <% }); %>
+</div>
+
+<%- include("partials/footer"); %>

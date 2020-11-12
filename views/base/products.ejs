@@ -1,0 +1,17 @@
+<%- include("partials/header") %>
+<div class="row justify-content-start m-1">
+    <% images.sort().forEach((item) => { %>
+        <div class="col-lg-3 col-md-6 mt-3">
+            <div class="img-thumbnail">
+                <a href="/products/<%= item._id %>" style="margin: 0; width: 100%" class="row text-center">
+                    <span class="price"><% if(item.price) { %>$<%=item.price.toFixed(2) %> <% } %></span>
+                    <img class="images" src="<%= item.compressedImage %>">
+                    <p class="slidecaption"><%= item.caption %></p>
+                </a>
+            </div>
+        </div>
+
+    <% }); %>
+</div>
+
+<%- include("partials/footer") %>
