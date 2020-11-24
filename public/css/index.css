@@ -59,6 +59,8 @@ p {
     height: 100%;
     padding-top: 10px;
     object-fit: fill;
+    aspect-ratio: 69 / 49;
+    
 }
 
 .left-btn, .right-btn {
@@ -277,12 +279,17 @@ footer{
     margin-left: auto;
 }
 
-.input-group-text {
-    width: 23%;
+.input-group > input {
+    min-width: 70%;
 }
 
-.input-group > input {
-    width: 70%;
+.input-group-prepend {
+    width: 20%;
+}
+
+.input-group-prepend label {
+    width: 100%;
+    overflow: hidden;
 }
 
 @media (max-width: 1080px){
@@ -301,6 +308,10 @@ footer{
     #cart table {
         margin-left: auto;
         margin-right: auto;
+    }
+
+    #inputFields{
+        width: 100%;
     }
 }
 

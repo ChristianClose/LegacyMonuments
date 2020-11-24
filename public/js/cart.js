@@ -80,8 +80,8 @@ function createCart() {
         button.setAttribute("type", "button");
         button.setAttribute("data-toggle", "collapse");
         button.setAttribute("data-target", "#cart");
-        button.setAttribute("aria-expanded", " false");
-        button.setAttribute("aira-controls", "cart");
+        button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-controls", "cart");
         button.classList.add("btn");
         button.classList.add("btn-light")
         button.innerText = "Cart"

@@ -10,18 +10,25 @@ var imgDir = [];
 const imgSource = "public/pictures/source/**/*.{jpg,JPG,jpeg,JPEG,png,PNG,svg,gif}";
 const imgOutput = "public/pictures/compressed/";
 
-function compressImg() {
-    compress_images(imgSource, imgOutput, { compress_force: false, statistic: true, autoupdate: true }, false,
+  function compressImg() {
+     compress_images(imgSource, imgOutput, { compress_force: false, statistic: true, autoupdate: true }, false,
         { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
         { png: { engine: "webp", command: ["-q", "60"] } },
         { svg: { engine: "svgo", command: "--multipass" } },
         { gif: { engine: "gifsicle", command: ["--colors", "64", "--use-col=web"] } },
-        (error, completed, statistic) => {
-            console.log("---------------");
-            console.log(error);
-            console.log(completed);
-            console.log(statistic);
-            console.log("---------------");
+        async (error, completed, statistic) => {
+            try{
+                
+                console.log("---------------");
+                console.log(error);
+                console.log(completed);
+                console.log(statistic);
+                console.log("---------------");
+            } catch(error){
+                console.log(error)
+            }
+
+
         }
     );
 };

@@ -12,43 +12,69 @@
             </ul>
 
         </aside>
-        <div id="inputFields">
+        <div id="inputFields" class="container">
             <% console.log(error) %>
             <h3>Contact Information</h3>
-            <form action="/checkout" method="POST" style="display: inline;" id="checkoutForm">
-                <div class="input-group mb3">
-                    <label class="input-group-text">Name: </label>
-                    <input type="text" name="customer[name]" placeholder="Enter your name" required>
+            <form action="/checkout" method="POST" class="form-group row" style="display: inline;" id="checkoutForm">
+                <div class="input-group justify-content-left">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text w-100" for="customer[name]">Name: </label>
+                    </div>
+
+                    <input class="form-control w-75" type="text" name="customer[name]" id="customer[name]"
+                        placeholder="Enter your name" required>
                 </div>
 
-                <div class="input-group mb3">
-                    <label class="input-group-text">Email: </label>
-                    <input type="email" name="customer[email]" placeholder="Enter your email" required>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text w-100" for="customer[email]">Email: </label>
+                    </div>
+
+                    <input class="form-control w-75" type="email" name="customer[email]" id="customer[email]"
+                        placeholder="Enter your email" required>
                 </div>
 
-                <div class="input-group mb3">
-                    <label class="input-group-text">Phone: </label>
-                    <input type="tel" name="customer[phone]" placeholder="Enter your phone number" required>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text w-100" for="customer[phone]">Phone: </label>
+                    </div>
+                    <input class="form-control w-75" type="tel" name="customer[phone]" id="customer[phone]"
+                        placeholder="Enter your phone number" required>
                 </div>
                 <br>
                 <h3>Address</h3>
-                <div class="input-group mb3">
-                    <label class="input-group-text">Street: </label>
-                    <input type="text" name="customer[address][street]" placeholder="Enter your street addresss" required>
-                    <label class="input-group-text">City: </label>
-                    <input type="text" name="customer[address][city]" placeholder="Enter the city you reside in"
-                        id="city" required>
-                    <label class="input-group-text">State: </label>
-                    <input type="text" name="customer[address][state]"
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text w-100" for="street">Street: </label>
+                    </div>
+                    <input class="form-control w-75" class="form-control" type="text" name="customer[address][street]"
+                        id="street" placeholder="Enter your street addresss" required>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text w-100" for="city">City: </label>
+                    </div>
+
+                    <input class="form-control w-75" type="text" name="customer[address][city]"
+                        placeholder="Enter the city you reside in" id="city" required>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text w-100" for="state">State: </label>
+                    </div>
+                    <input class="form-control w-75" type="text" name="customer[address][state]"
                         placeholder="Enter your 2 digit state code. Ex. AR" maxlength="2" id="state" required>
                 </div>
-                <br>
+                <br/>
                 <button class="btn btn-light" type="submit" id="submitCart">Submit</button>
-            </form>
-            <% if(error) { %>
-                <p><%= error %></p>
-            <% } %>
-           
         </div>
+        </form>
+        <% if(error) { %>
+        <p><%= error %></p>
+        <% } %>
+
     </div>
-    <%- include("partials/footer"); %>
+</div>
+<%- include("partials/footer"); %>
